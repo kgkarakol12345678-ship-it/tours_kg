@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Музеи и парки</title>
+    <!-- Подключение шрифтов и иконок -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fa-solid fa-leaf"></i> Музеи и парки <i class="fa-solid fa-building-columns"></i></h1>
+            <p>Интересные места для культурного отдыха и прогулок</p>
+        </header>
+
+        <!-- Фильтры (дополнительная функция) -->
+        <div class="filters">
+            <button class="filter-btn active" data-filter="all">Все</button>
+            <button class="filter-btn" data-filter="Museum"><i class="fa-solid fa-building-columns"></i> Музеи</button>
+            <button class="filter-btn" data-filter="Park"><i class="fa-solid fa-tree"></i> Парки</button>
+        </div>
+
+        <!-- Контейнер для карточек -->
+        <div id="places-container" class="places-grid">
+            <div class="loader"><i class="fa-solid fa-spinner fa-spin-pulse"></i> Загрузка...</div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
