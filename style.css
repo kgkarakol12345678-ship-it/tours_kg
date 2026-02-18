@@ -1,0 +1,291 @@
+/* ========== ПЕРЕМЕННЫЕ ========== */
+:root {
+  --color-bg: #f7f3ec;                /* состаренный холст */
+  --color-pine: #1e3f3a;               /* глубокая хвоя */
+  --color-teal: #6a8e8a;                /* выцветшая бирюза */
+  --color-graphite: #4a4a4a;            /* тёплый графит */
+  --color-light: #faf7f2;
+  --color-dark: #2a2a2a;
+
+  --font-serif: 'Playfair Display', serif;
+  --font-sans: 'Inter', sans-serif;
+
+  --shadow-card: 0 15px 30px -10px rgba(30, 63, 58, 0.15),
+                 0 5px 15px -5px rgba(0, 0, 0, 0.05);
+  --shadow-card-hover: 0 25px 40px -15px rgba(30, 63, 58, 0.3),
+                       0 10px 20px -8px rgba(0, 0, 0, 0.1);
+
+  --transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* ========== БАЗОВЫЕ СТИЛИ ========== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-bg);
+  /* Едва заметный паттерн: точки и линии */
+  background-image: 
+    radial-gradient(circle at 30% 40%, rgba(106, 142, 138, 0.03) 0%, transparent 20%),
+    repeating-linear-gradient(45deg, rgba(30, 63, 58, 0.02) 0px, rgba(30, 63, 58, 0.02) 2px, transparent 2px, transparent 8px);
+  min-height: 100vh;
+  padding: 2rem 1rem;
+  color: var(--color-dark);
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+/* ========== ШАПКА ========== */
+header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+header h1 {
+  font-family: var(--font-serif);
+  font-size: 2.8rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--color-pine);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+header h1 i {
+  font-size: 2.4rem;
+  color: var(--color-teal);
+  opacity: 0.8;
+}
+
+header p {
+  font-size: 1.2rem;
+  color: var(--color-graphite);
+  border-bottom: 1px dashed rgba(106, 142, 138, 0.3);
+  display: inline-block;
+  padding-bottom: 0.3rem;
+}
+
+/* ========== ФИЛЬТРЫ (ТЕГИ) ========== */
+.filters {
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+  margin-bottom: 2.5rem;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  background: transparent;
+  border: 1px solid var(--color-teal);
+  padding: 0.4rem 1.5rem;
+  border-radius: 40px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--color-pine);
+  cursor: pointer;
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: none;
+}
+
+.filter-btn i {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.filter-btn:hover {
+  background-color: rgba(106, 142, 138, 0.08);
+  border-color: var(--color-pine);
+  transform: translateY(-2px);
+}
+
+.filter-btn.active {
+  background-color: var(--color-pine);
+  border-color: var(--color-pine);
+  color: var(--color-light);
+}
+
+.filter-btn.active i {
+  color: var(--color-light);
+}
+
+/* ========== СЕТКА КАРТОЧЕК ========== */
+.places-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+  animation: fadeIn 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ========== КАРТОЧКА ========== */
+.place-card {
+  background-color: var(--color-light);
+  border-radius: 40px 8px 40px 8px;   /* асимметрия */
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(2px);
+  transform: rotate(0deg); /* базовый поворот для smooth-эффекта */
+}
+
+.place-card:hover {
+  transform: translateY(-8px) rotate(0.2deg);
+  box-shadow: var(--shadow-card-hover);
+}
+
+/* Изображение */
+.card-image {
+  height: 210px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+/* Градиентная подложка под текст (не мешает стеклу) */
+.card-image::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40%;
+  background: linear-gradient(to top, rgba(30, 63, 58, 0.2), transparent);
+  pointer-events: none;
+}
+
+/* Бейдж категории (эффект стекла) */
+.card-type {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(10px) saturate(180%);
+  -webkit-backdrop-filter: blur(10px) saturate(180%);
+  padding: 0.4rem 1.2rem;
+  border-radius: 40px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  color: #1e2b1e;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+}
+
+.card-type i {
+  font-size: 0.8rem;
+  opacity: 0.9;
+}
+
+/* Контент карточки */
+.card-content {
+  padding: 1.5rem 1.5rem 1.8rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-title {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.3;
+  margin-bottom: 0.6rem;
+  color: var(--color-pine);
+}
+
+.card-description {
+  font-size: 0.95rem;
+  color: var(--color-graphite);
+  line-height: 1.6;
+  margin-bottom: 1.2rem;
+  flex: 1;
+}
+
+/* Кнопка "Проложить путь" (текстовая ссылка) */
+.route-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--color-teal);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: var(--transition);
+  width: fit-content;
+  padding: 0.2rem 0;
+}
+
+.route-link i {
+  font-size: 0.9rem;
+  transition: transform 0.2s ease;
+}
+
+.route-link:hover {
+  color: var(--color-pine);
+  border-bottom-color: currentColor;
+}
+
+.route-link:hover i {
+  transform: translateX(3px);
+}
+
+/* Заглушка для загрузки */
+.loader {
+  text-align: center;
+  grid-column: 1 / -1;
+  padding: 3rem;
+  font-size: 1.2rem;
+  color: var(--color-graphite);
+}
+
+.loader i {
+  margin-right: 0.5rem;
+  font-size: 1.5rem;
+  color: var(--color-teal);
+}
+
+/* ========== АДАПТИВНОСТЬ ========== */
+@media (max-width: 640px) {
+  header h1 {
+    font-size: 2rem;
+  }
+  .filters {
+    gap: 0.4rem;
+  }
+  .filter-btn {
+    padding: 0.3rem 1rem;
+    font-size: 0.85rem;
+  }
+  .place-card {
+    border-radius: 30px 4px 30px 4px;
+  }
+  .card-title {
+    font-size: 1.3rem;
+  }
+}
